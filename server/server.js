@@ -21,3 +21,17 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+// import processMessage function
+const { processMessage } = require('./routes/process_messages.js');
+
+// route that receives messages, breaks them down and collects amount, whether its sent or received, and the date
+app.post('/process_message', (req, res) => {
+  const { message } = req.body;
+
+  // call processing funtion
+  processMessage(message);
+
+  // send response to client
+  res.send('Message processed');
+});
