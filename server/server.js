@@ -4,6 +4,7 @@ const cors = require("cors");
 
 // Routes imports
 const waitlist = require("./routes/waitlist");
+const process_messages = require("./routes/process_messages");
 
 // Express setup
 const app = express();
@@ -15,23 +16,11 @@ app.use(express.urlencoded({ extended: true }));
 // Routes setup
 // http://localhost:3000/waitlist/
 app.use("/waitlist", waitlist);
+// http://localhost:3000/process_messages/
+app.use("/process_messages", process_messages);
 
 // Server setup
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
-});
-
-// import processMessage function
-const { processMessage } = require('./routes/process_messages.js');
-
-// route that receives messages, breaks them down and collects amount, whether its sent or received, and the date
-app.post('/process_message', (req, res) => {
-  const { message } = req.body;
-
-  // call processing funtion
-  processMessage(message);
-
-  // send response to client
-  res.send('Message processed');
 });
