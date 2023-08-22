@@ -1,8 +1,8 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const supabase = require("../utils/db");
+const supabase = require('../utils/db');
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { email, name } = req.body;
 
@@ -11,9 +11,9 @@ router.post("/", async (req, res) => {
     // If the email doesn't exist, it will insert the email and name
     // The onConflict option tells Supabase to use the email column as the conflict column
     const { data, error } = await supabase
-      .from("waitlist")
-      .upsert({ email, name }, { onConflict: "email" })
-      .eq("email", email)
+      .from('waitlist')
+      .upsert({ email, name }, { onConflict: 'email' })
+      .eq('email', email)
       .select();
 
     if (error) throw error;
