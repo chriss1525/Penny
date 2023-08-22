@@ -6,6 +6,7 @@ const cors = require('cors');
 const waitlist = require('./routes/waitlist');
 const process_messages = require('./routes/process_messages');
 const transactions = require('./routes/transactions');
+const analysis = require('./routes/analysis');
 
 // Express setup
 const app = express();
@@ -21,6 +22,9 @@ app.use('/process_messages', process_messages);
 
 // http://localhost:3000/transactions/
 app.use('/transactions', transactions);
+
+// http://localhost:3000/analysis/
+app.use('/analysis', analysis);
 // Server setup
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
