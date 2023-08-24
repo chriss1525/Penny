@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../utils/db.js');
 
-router.get('/analysis/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const userId = req.params.id;
     const date_1 = req.query.date_1;
