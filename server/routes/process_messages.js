@@ -6,34 +6,24 @@ router.post("/", async (req, res) => {
   try {
     let balance = 0;
 
-    const { message } = req.body;
-    const amount = message.match(/\b(\d+)\s?Ksh\b/);
-    const transactionType = message.includes("sent") ? "sent" : "received";
-
-    if (transactionType === "sent") {
-      balance -= parseInt(amount[1]);
-    }
-
-    if (transactionType === "received") {
-      balance += parseInt(amount[1]);
-    }
-
-    const date = message.match(/\d{2}\/\d{2}\/\d{2}/);
-
+    const transactions = req.body;
     const { data, error } = await supabase
-      .from("transactions")
-      .insert({
-        amount: amount[1],
-        transaction_type: transactionType,
-        date: date[0],
-        balance: balance,
-      })
-      .select();
+  .from("transactions")
+      .insert(transactions.map(transaction => ({
+        transaction_id: transaction.transaction_id,
+        recipient: transaction.recipient,
+        sender: transaction.sender,
+        time : transaction.time,
+        amount: transaction.amount,
+        transaction_type: transaction.type,
+        date: transaction.date,
+        balance: parseFloat(transaction.balance.replace(',', '')), // Remove commas from balance and parse as float
+      })));
 
     if (error) throw error;
-    res.status(200).json({ data });
+    res.status(200).json({ message: "Success" });
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({ error: error.message });
   }
 });
 
