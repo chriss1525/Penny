@@ -31,6 +31,9 @@ class HomeContainer extends StatelessWidget {
       children: [
         const HomeText(),
         const HomeButton(),
+        const Spacer(),
+        const GetSmsButton(),
+        const SmsList(),
       ],
     );
   }
@@ -67,6 +70,42 @@ class HomeButton extends StatelessWidget {
         });
       },
       child: const Text('Grant Permission'),
+    );
+  }
+}
+
+class GetSmsButton extends StatelessWidget {
+  const GetSmsButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        SmsService().getMessages().then((value) {
+          Provider.of<MyAppState>(context, listen: false).setMessages(value);
+        });
+      },
+      child: const Text('Get Messages'),
+    );
+  }
+}
+
+class SmsList extends StatelessWidget {
+  const SmsList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: Provider.of<MyAppState>(context).messages.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(
+              Provider.of<MyAppState>(context).messages[index].body!,
+            ),
+          );
+        },
+      ),
     );
   }
 }
