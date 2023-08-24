@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const supabase = require("../utils/db.js");
 
-router.get("/transactions/:userID", async (req, res) => {
+router.get("/:userID", async (req, res) => {
   try {
     const userID = req.params.userID;
 
