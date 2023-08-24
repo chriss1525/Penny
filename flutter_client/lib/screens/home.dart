@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:penny/utils/mpesa.dart';
 import 'package:penny/utils/sms.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,6 @@ class HomeContainer extends StatelessWidget {
       children: [
         const HomeText(),
         const HomeButton(),
-        const Spacer(),
         const GetSmsButton(),
         const SmsList(),
       ],
@@ -84,6 +84,10 @@ class GetSmsButton extends StatelessWidget {
         SmsService().getMessages().then((value) {
           Provider.of<MyAppState>(context, listen: false).setMessages(value);
         });
+
+        MpesaService().filterSendMoney(
+          Provider.of<MyAppState>(context, listen: false).messages,
+        );
       },
       child: const Text('Get Messages'),
     );
