@@ -1,5 +1,5 @@
-name: namer_app
-description: A new Flutter Project
+name: penny
+description: Your personal finance manager.
 
 publish_to: none
 
@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  english_words: ^4.0.0
   provider: ^6.0.0
 
 dev_dependencies:
