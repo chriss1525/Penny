@@ -2,6 +2,10 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/favorites.dart';
+import 'screens/generator.dart';
+import 'states/app_state.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -22,26 +26,6 @@ class MyApp extends StatelessWidget {
         home: MyHomePage(),
       ),
     );
-  }
-}
-
-class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
-
-  var favorites = <WordPair>[];
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-    notifyListeners();
   }
 }
 
@@ -98,82 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
     });
-  }
-}
-
-class FavoritesPage extends StatelessWidget {
-  const FavoritesPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var favorites = appState.favorites;
-
-    if (favorites.isNotEmpty) {
-      return ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text('You have ${favorites.length} favorites'),
-          ),
-          ...favorites
-              .map((pair) => ListTile(
-                    title: Text(pair.asLowerCase),
-                    onTap: () {
-                      appState.current = pair;
-                      appState.toggleFavorite();
-                    },
-                  ))
-              .toList(),
-        ],
-      );
-    } else {
-      return Center(
-        child: Text('No favorites yet'),
-      );
-    }
-  }
-}
-
-class GeneratorPage extends StatelessWidget {
-  const GeneratorPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
-
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BigCard(pair: pair),
-          SizedBox(height: 16),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                icon: Icon(icon),
-                label: Text('Like'),
-                onPressed: () => appState.toggleFavorite(),
-              ),
-              SizedBox(width: 16),
-              ElevatedButton(
-                onPressed: () => appState.getNext(),
-                child: Text('Next'),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
   }
 }
 
