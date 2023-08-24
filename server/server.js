@@ -1,19 +1,20 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
 
 // Routes imports
 const waitlist = require("./routes/waitlist");
 const login = require("./auth/login");
 const register = require("./auth/register");
 const process_messages = require("./routes/process_messages");
+const transactions = require('./routes/transactions');
+const analysis = require('./routes/analysis');
 
 // Express setup
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 
 // Routes setup
 // http://localhost:3000/login/
@@ -23,10 +24,15 @@ app.use("/login", login);
 app.use("/register", register);
 
 // http://localhost:3000/waitlist/
-app.use("/waitlist", waitlist);
+app.use('/waitlist', waitlist);
 // http://localhost:3000/process_messages/
-app.use("/process_messages", process_messages);
+app.use('/process_messages', process_messages);
 
+// http://localhost:3000/transactions/
+app.use('/transactions', transactions);
+
+// http://localhost:3000/analysis/
+app.use('/analysis', analysis);
 // Server setup
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
