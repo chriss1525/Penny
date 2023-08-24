@@ -9,7 +9,7 @@ router.get("/:userID", async (req, res) => {
     // Get all transactions for a specific user
     const { data, error } = await supabase
       .from("transactions")
-      .select("amount, transaction_type, balance")
+      .select("amount, transaction_type, balance, time, sender, recipient, sender_phone, recipient_phone, transaction_id")
       .eq("id", userID)
       .order("date", { ascending: false });
 

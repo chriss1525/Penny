@@ -18,6 +18,8 @@ router.post("/", async (req, res) => {
         transaction_type: transaction.type,
         date: transaction.date,
         balance: parseFloat(transaction.balance.replace(',', '')), // Remove commas from balance and parse as float
+        recipient_phone: transaction.recipient_phone,
+        sender_phone: transaction.sender_phone,
       })));
 
     if (error) throw error;
