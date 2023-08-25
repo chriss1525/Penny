@@ -3,8 +3,11 @@ import 'package:client/utils/sms.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class RequestPermissionsScreen extends StatelessWidget {
-  const RequestPermissionsScreen({super.key});
+class RequestPermissionScreen extends StatelessWidget {
+  // TODO: implement flow to request permissions. Multiple horizontal screens explaining why we need permissions and how Penny works
+  // TODO: implement authentication screen
+  // TODO: implement sync screen, where transactions are retrieved from db
+  const RequestPermissionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +34,15 @@ class RequestPermissionsScreen extends StatelessWidget {
               flex: 1,
             ),
             ElevatedButton(
-              child: const Text('Request Permissions'),
+              child: const Text('Grant Permissions'),
               onPressed: () async {
+                // request sms permissions
                 SmsService().checkPermission().then((value) {
                   Provider.of<PennyProvider>(context, listen: false)
                       .setPermission(value!);
                 });
+
+                // get all messages
               },
             ),
             const Spacer(

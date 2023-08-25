@@ -1,3 +1,4 @@
+import 'package:client/screens/accounts.dart';
 import 'package:client/screens/request_permissions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +52,8 @@ class Home extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       ),
       body: Provider.of<PennyProvider>(context).hasPermission
-          ? const Placeholder()
-          : const RequestPermissionsScreen(),
+          ? const AccountsPage()
+          : const RequestPermissionScreen(),
     );
   }
 }
