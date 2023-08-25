@@ -1,3 +1,4 @@
+import 'package:penny/models/transaction.dart';
 import 'package:telephony/telephony.dart';
 
 class MpesaService {
@@ -11,7 +12,11 @@ class MpesaService {
     for (var message in messages) {
       if (message.body!.contains(
           RegExp(r'^.* sent to .+ \d{10} on \d{1,2}/\d{1,2}/\d{2}'))) {
-        sendMoneyMessages.add(parseSendMoney(message.body!));
+        sendMoneyMessages.add(
+          SendMoneyTransaction.fromMessage(
+            message.body!,
+          ).toMap(),
+        );
       }
     }
 

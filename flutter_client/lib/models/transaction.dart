@@ -177,6 +177,9 @@ class SendMoneyTransaction extends BaseTransaction {
   }
 
   @override
+  String toJson() => json.encode(toMap());
+
+  @override
   factory SendMoneyTransaction.fromMap(Map<String, dynamic> map) {
     return SendMoneyTransaction(
       id: map['id'],

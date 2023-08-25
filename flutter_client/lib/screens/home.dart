@@ -28,13 +28,7 @@ class HomeContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        const HomeText(),
-        const HomeButton(),
-        const Spacer(),
-        const GetSmsButton(),
-        const SmsList(),
-      ],
+      children: [],
     );
   }
 }
@@ -83,6 +77,7 @@ class GetSmsButton extends StatelessWidget {
       onPressed: () {
         SmsService().getMessages().then((value) {
           Provider.of<MyAppState>(context, listen: false).setMessages(value);
+          Provider.of<MyAppState>(context, listen: false).setTransactions();
         });
       },
       child: const Text('Get Messages'),
@@ -97,11 +92,11 @@ class SmsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-        itemCount: Provider.of<MyAppState>(context).messages.length,
+        itemCount: Provider.of<MyAppState>(context).transactions.length,
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(
-              Provider.of<MyAppState>(context).messages[index].body!,
+              Provider.of<MyAppState>(context).transactions[index].toString(),
             ),
           );
         },

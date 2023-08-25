@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  http: ^1.1.0
   provider: ^6.0.0
   telephony: ^0.2.0
 
