@@ -7,11 +7,9 @@ class SliderModel {
     required this.description,
   });
 
-  void setTitle(String source) {
-    title = source;
-  }
+  String get getTitle => title;
+  String get getDescription => description;
 
-  void setDescription(String source) {
-    description = source;
-  }
+  set setTitle(String title) => this.title = title;
+  set setDescription(String description) => this.description = description;
 }

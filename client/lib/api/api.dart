@@ -1,4 +1,4 @@
-import 'package:client/api/transaction_api.dart';
+import 'package:client/api/transactions/transaction_api.dart';
 
 class Api {
   final String baseUrl = 'http://localhost:3000';

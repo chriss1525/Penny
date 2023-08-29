@@ -10,6 +10,15 @@ class Onboarding extends StatefulWidget {
 class _OnboardingState extends State<Onboarding> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Expanded(
+      child: PageView(
+        scrollDirection: Axis.horizontal,
+        children: const [
+          Placeholder(),
+          Placeholder(),
+          Placeholder(),
+        ],
+      ),
+    );
   }
 }
