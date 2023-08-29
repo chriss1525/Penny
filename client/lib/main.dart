@@ -4,28 +4,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   return runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
+    const PennyApp(),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class PennyApp extends StatelessWidget {
+  const PennyApp({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Penny',
-      home: Scaffold(
-        body: const Onboarding(),
-        backgroundColor:
-            ColorScheme.fromSeed(seedColor: Colors.deepPurple).primaryContainer,
-      ),
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+    return ProviderScope(
+      child: MaterialApp(
+        title: 'Penny',
+        home: const Scaffold(
+          body: Onboarding(),
+        ),
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.deepPurple,
+          ),
         ),
       ),
     );

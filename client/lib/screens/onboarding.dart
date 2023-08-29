@@ -27,33 +27,41 @@ class _OnboardingState extends State<Onboarding> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      key: const Key('onboarding'),
-      textDirection: TextDirection.ltr,
-      child: PageView.builder(
-        itemCount: slides.length,
-        scrollDirection: Axis.horizontal,
-        onPageChanged: (value) {
-          setState(() {
-            currentIndex = value;
-          });
-        },
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.all(24.0),
+    return Stack(
+      children: <Widget>[
+        PageView.builder(
+          controller: _controller,
+          itemCount: slides.length,
+          scrollDirection: Axis.horizontal,
+          onPageChanged: (value) {
+            setState(() {
+              currentIndex = value;
+            });
+          },
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  slides[index].getTitle,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  slides[index].getDescription,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ],
+            ),
+          ),
+        ),
+        Align(
+          alignment: const Alignment(1.0, 0.7),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                slides[index].getTitle,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 20),
-              Text(
-                slides[index].getDescription,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
@@ -61,10 +69,26 @@ class _OnboardingState extends State<Onboarding> {
                   (index) => buildDot(index: index),
                 ),
               ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // if current index is not last item, on click set current index to next item
+                  if (currentIndex < slides.length - 1 &&
+                      _controller.hasClients) {
+                    _controller.animateToPage(
+                      currentIndex + 1,
+                      duration: const Duration(milliseconds: 400),
+                      curve: Curves.easeInOut,
+                    );
+                  } else {}
+                },
+                child: Text(
+                    currentIndex < slides.length - 1 ? 'Next' : 'Get Started'),
+              ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 
