@@ -120,7 +120,7 @@ class Transaction {
     } else {
       return Transaction(
         transactionId: '',
-        transactionType: '',
+        transactionType: 'another_type',
         amount: '',
         date: '',
         time: '',
