@@ -15,6 +15,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Onboarding();
+    return MaterialApp(
+      title: 'Penny',
+      home: Scaffold(
+        body: const Onboarding(),
+        backgroundColor:
+            ColorScheme.fromSeed(seedColor: Colors.deepPurple).primaryContainer,
+      ),
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+        ),
+      ),
+    );
   }
 }
