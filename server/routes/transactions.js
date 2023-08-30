@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const supabase = require("../utils/db.js");
 
-router.get("/:userID", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const userID = req.params.userID;
 
@@ -10,7 +10,6 @@ router.get("/:userID", async (req, res) => {
     const { data, error } = await supabase
       .from("transactions")
       .select("amount, transaction_type, balance, time, sender, recipient, sender_phone, recipient_phone, transaction_id")
-      .eq("id", userID)
       .order("date", { ascending: false });
 
     if (error) throw error;
