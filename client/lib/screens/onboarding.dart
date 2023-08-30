@@ -1,3 +1,5 @@
+import 'package:client/screens/login.dart';
+import 'package:client/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -73,31 +75,31 @@ class _OnboardingState extends State<Onboarding> {
                 ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  // if current index is not last item, on click set current index to next item
-                  if (currentIndex < slides.length - 1 &&
-                      _controller.hasClients) {
-                    _controller.animateToPage(
-                      currentIndex + 1,
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.easeInOut,
-                    );
-                  } else if (_controller.hasClients) {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    await prefs.setBool('isOnboarded', true);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Placeholder(),
-                      ),
-                    );
-                  }
-                },
-                child: Text(
-                    currentIndex < slides.length - 1 ? 'Next' : 'Get Started'),
-              ),
+              currentIndex == slides.length - 1
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        OnboardingCtaButton(
+                          currentIndex: currentIndex,
+                          controller: _controller,
+                          buttonText: 'Login',
+                          buttonType: ButtonType.login,
+                        ),
+                        const SizedBox(width: 20),
+                        OnboardingCtaButton(
+                          currentIndex: currentIndex,
+                          controller: _controller,
+                          buttonText: 'Register',
+                          buttonType: ButtonType.register,
+                        ),
+                      ],
+                    )
+                  : OnboardingCtaButton(
+                      currentIndex: currentIndex,
+                      controller: _controller,
+                      buttonText: 'Next',
+                      buttonType: ButtonType.next,
+                    )
             ],
           ),
         ),
@@ -116,6 +118,63 @@ class _OnboardingState extends State<Onboarding> {
             : Colors.deepPurple.withOpacity(0.2),
         borderRadius: BorderRadius.circular(20),
       ),
+    );
+  }
+}
+
+enum ButtonType { login, register, next }
+
+class OnboardingCtaButton extends StatelessWidget {
+  const OnboardingCtaButton({
+    super.key,
+    required this.currentIndex,
+    required PageController controller,
+    required this.buttonText,
+    required this.buttonType,
+  }) : _controller = controller;
+
+  final int currentIndex;
+  final PageController _controller;
+  final String buttonText;
+  final ButtonType buttonType;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        // if current index is not last item, on click set current index to next item
+        if (currentIndex < slides.length - 1 && _controller.hasClients) {
+          _controller.animateToPage(
+            currentIndex + 1,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeInOut,
+          );
+        } else if (_controller.hasClients) {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('isOnboarded', true);
+
+          if (!context.mounted) return;
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => buttonType == ButtonType.login
+                  ? const LoginScreen()
+                  : const Register(),
+            ),
+          );
+        }
+      },
+      style: buttonType == ButtonType.register
+          ? ElevatedButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            )
+          : null,
+      child: Text(buttonText),
     );
   }
 }
