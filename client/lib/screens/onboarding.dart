@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/slider.dart';
 
 class Onboarding extends StatefulWidget {
-  const Onboarding({super.key});
+  const Onboarding({
+    super.key,
+  });
 
   @override
   State<Onboarding> createState() => _OnboardingState();
@@ -71,7 +74,7 @@ class _OnboardingState extends State<Onboarding> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // if current index is not last item, on click set current index to next item
                   if (currentIndex < slides.length - 1 &&
                       _controller.hasClients) {
@@ -80,7 +83,17 @@ class _OnboardingState extends State<Onboarding> {
                       duration: const Duration(milliseconds: 400),
                       curve: Curves.easeInOut,
                     );
-                  } else {}
+                  } else if (_controller.hasClients) {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    await prefs.setBool('isOnboarded', true);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Placeholder(),
+                      ),
+                    );
+                  }
                 },
                 child: Text(
                     currentIndex < slides.length - 1 ? 'Next' : 'Get Started'),

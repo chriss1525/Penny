@@ -1,16 +1,24 @@
 import 'package:client/screens/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isOnboarded = prefs.getBool('isOnboarded') ?? false;
+
   return runApp(
-    const PennyApp(),
+    PennyApp(isOnboarded: isOnboarded),
   );
 }
 
 class PennyApp extends StatelessWidget {
+  final bool isOnboarded;
+
   const PennyApp({
     super.key,
+    required this.isOnboarded,
   });
 
   @override
@@ -18,8 +26,8 @@ class PennyApp extends StatelessWidget {
     return ProviderScope(
       child: MaterialApp(
         title: 'Penny',
-        home: const Scaffold(
-          body: Onboarding(),
+        home: Scaffold(
+          body: !isOnboarded ? const Onboarding() : const Placeholder(),
         ),
         theme: ThemeData(
           useMaterial3: true,

@@ -39,6 +39,7 @@ dependencies:
   telephony: ^0.2.0
   flutter_riverpod: ^2.3.7
   http: ^1.1.0
+  shared_preferences: ^2.2.0
 
 dev_dependencies:
   flutter_test:
