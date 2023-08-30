@@ -15,12 +15,7 @@ class MyApp extends StatelessWidget {
       create: (context) => MyAppState(),
       child: MaterialApp(
         title: 'Penny',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.deepPurple,
-          ),
-        ),
+        theme: ThemeData(colorSchemeSeed: Colors.deepPurple),
         home: HomePage(),
       ),
     );
