@@ -1,4 +1,5 @@
 import 'package:client/screens/onboarding.dart';
+import 'package:client/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +28,7 @@ class PennyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Penny',
         home: Scaffold(
-          body: !isOnboarded ? const Onboarding() : const Placeholder(),
+          body: !isOnboarded ? const Onboarding() : const RegisterScreen(),
         ),
         theme: ThemeData(
           useMaterial3: true,

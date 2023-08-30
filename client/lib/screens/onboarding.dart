@@ -160,7 +160,7 @@ class OnboardingCtaButton extends StatelessWidget {
             MaterialPageRoute(
               builder: (BuildContext context) => buttonType == ButtonType.login
                   ? const LoginScreen()
-                  : const Register(),
+                  : const RegisterScreen(),
             ),
           );
         }
