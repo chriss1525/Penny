@@ -4,8 +4,8 @@ const cors = require('cors');
 
 // Routes imports
 const waitlist = require("./routes/waitlist");
-const login = require("./User/login");
-const register = require("./User/register");
+const login = require("./user/login");
+const register = require("./user/register");
 const process_messages = require("./routes/process_messages");
 const transactions = require('./routes/transactions');
 const analysis = require('./routes/analysis');
