@@ -30,71 +30,76 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: <Widget>[
-          TextFormField(
-            onChanged: (value) => email = value,
-            onSaved: (value) => email = value!,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              hintText: 'Email',
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            TextFormField(
+              onChanged: (value) => email = value,
+              onSaved: (value) => email = value!,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                hintText: 'Email',
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                }
+                return null;
+              },
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your email';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            onChanged: (value) => password = value,
-            onSaved: (value) => password = value!,
-            obscureText: true,
-            autocorrect: false,
-            decoration: const InputDecoration(
-              hintText: 'Password',
+            const SizedBox(height: 16.0),
+            TextFormField(
+              onChanged: (value) => password = value,
+              onSaved: (value) => password = value!,
+              obscureText: true,
+              autocorrect: false,
+              decoration: const InputDecoration(
+                hintText: 'Password',
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your password';
+                }
+                return null;
+              },
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your password';
-              }
-              return null;
-            },
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Loging in User')),
-                );
-
-                _formKey.currentState!.save();
-
-                Api api = Api();
-                Response response = await api.auth.login(email, password);
-
-                if (!context.mounted) return;
-
-                if (response.statusCode == 200) {
+            const SizedBox(height: 24.0),
+            ElevatedButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Success')),
+                    const SnackBar(content: Text('Loging in User')),
                   );
+
+                  _formKey.currentState!.save();
+
+                  Api api = Api();
+                  Response response = await api.auth.login(email, password);
+
+                  if (!context.mounted) return;
+
+                  if (response.statusCode == 200) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Success')),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(response.body)),
+                    );
+                  }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(response.body)),
+                    const SnackBar(content: Text('Invalid Data')),
                   );
                 }
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Invalid Data')),
-                );
-              }
-            },
-            child: const Text('Login'),
-          ),
-        ],
+              },
+              child: const Text('Login'),
+            ),
+          ],
+        ),
       ),
     );
   }
