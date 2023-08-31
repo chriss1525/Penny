@@ -1,10 +1,13 @@
+import 'package:client/screens/login.dart';
 import 'package:client/screens/onboarding.dart';
 import 'package:client/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
+  await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isOnboarded = prefs.getBool('isOnboarded') ?? false;
@@ -28,7 +31,7 @@ class PennyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Penny',
         home: Scaffold(
-          body: !isOnboarded ? const Onboarding() : const RegisterScreen(),
+          body: !isOnboarded ? const Onboarding() : const LoginScreen(),
         ),
         theme: ThemeData(
           useMaterial3: true,

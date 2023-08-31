@@ -1,4 +1,6 @@
+import 'package:client/api/api.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -62,13 +64,28 @@ class _RegisterFormState extends State<RegisterForm> {
             },
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Processing Data')),
+                  const SnackBar(content: Text('Registering User')),
                 );
 
                 _formKey.currentState!.save();
+
+                Api api = Api();
+                Response response = await api.auth.register(email, password);
+
+                if (!context.mounted) return;
+
+                if (response.statusCode == 200) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Success')),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(response.body)),
+                  );
+                }
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Invalid Data')),

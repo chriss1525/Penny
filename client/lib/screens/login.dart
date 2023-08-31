@@ -1,10 +1,101 @@
+import 'package:client/api/api.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+      ),
+      body: const LoginForm(),
+    );
+  }
+}
+
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  final _formKey = GlobalKey<FormState>();
+  late String email;
+  late String password;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: <Widget>[
+          TextFormField(
+            onChanged: (value) => email = value,
+            onSaved: (value) => email = value!,
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(
+              hintText: 'Email',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your email';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            onChanged: (value) => password = value,
+            onSaved: (value) => password = value!,
+            obscureText: true,
+            autocorrect: false,
+            decoration: const InputDecoration(
+              hintText: 'Password',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your password';
+              }
+              return null;
+            },
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              if (_formKey.currentState!.validate()) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Loging in User')),
+                );
+
+                _formKey.currentState!.save();
+
+                Api api = Api();
+                Response response = await api.auth.login(email, password);
+
+                if (!context.mounted) return;
+
+                if (response.statusCode == 200) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Success')),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(response.body)),
+                  );
+                }
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Invalid Data')),
+                );
+              }
+            },
+            child: const Text('Login'),
+          ),
+        ],
+      ),
+    );
   }
 }
