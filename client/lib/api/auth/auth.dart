@@ -28,4 +28,16 @@ class AuthApi {
 
     return res;
   }
+
+  Future<http.Response> resetPassword(String email, password) async {
+    http.Response res = await http.post(
+      Uri.parse('${api.baseUrl}/reset-password'),
+      body: {
+        'email': email,
+        'password': password,
+      },
+    );
+
+    return res;
+  }
 }

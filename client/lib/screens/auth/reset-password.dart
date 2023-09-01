@@ -2,31 +2,32 @@ import 'package:client/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class ResetPasswordScreen extends StatelessWidget {
+  const ResetPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Reset password'),
       ),
-      body: const LoginForm(),
+      body: const ResetPasswordForm(),
     );
   }
 }
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+class ResetPasswordForm extends StatefulWidget {
+  const ResetPasswordForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<ResetPasswordForm> createState() => _ResetPasswordFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _ResetPasswordFormState extends State<ResetPasswordForm> {
   final _formKey = GlobalKey<FormState>();
   late String email;
   late String password;
+  late String confirmPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Form(
         key: _formKey,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextFormField(
               onChanged: (value) => email = value,
@@ -57,21 +59,48 @@ class _LoginFormState extends State<LoginForm> {
               obscureText: true,
               autocorrect: false,
               decoration: const InputDecoration(
-                hintText: 'Password',
+                hintText: 'New Password',
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter your password';
+                  return 'Please enter your new password';
                 }
                 return null;
               },
             ),
-            const SizedBox(height: 24.0),
+            const SizedBox(height: 16.0),
+            TextFormField(
+              onChanged: (value) => confirmPassword = value,
+              onSaved: (value) => confirmPassword = value!,
+              obscureText: true,
+              autocorrect: false,
+              decoration: const InputDecoration(
+                hintText: 'Confirm New Password',
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please confirm your new password';
+                }
+
+                if (value != password) {
+                  return 'Passwords do not match';
+                }
+
+                return null;
+              },
+            ),
+            const SizedBox(height: 60.0),
             ElevatedButton(
+              // make the button full width
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                minimumSize: const Size(double.infinity, 48),
+              ),
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Loging in User')),
+                    const SnackBar(content: Text('Resetting Password')),
                   );
 
                   _formKey.currentState!.save();
@@ -96,7 +125,7 @@ class _LoginFormState extends State<LoginForm> {
                   );
                 }
               },
-              child: const Text('Login'),
+              child: const Text('Reset Password'),
             ),
           ],
         ),

@@ -1,5 +1,5 @@
-import 'package:client/screens/login.dart';
-import 'package:client/screens/register.dart';
+import 'package:client/screens/auth/login.dart';
+import 'package:client/screens/auth/register.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
