@@ -15,6 +15,7 @@ router.post("/", async (req, res) => {
 		return res.status(400).json({ error: error.message });
 	}
 
+	req.session.userSession = data.session;
 	return res.status(200).json({ data });
 });
 
