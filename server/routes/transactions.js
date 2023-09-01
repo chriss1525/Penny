@@ -4,12 +4,12 @@ const supabase = require("../utils/db.js");
 
 router.get("/", async (req, res) => {
   try {
-    const userID = req.params.userID;
 
     // Get all transactions for a specific user
     const { data, error } = await supabase
       .from("transactions")
-      .select("amount, transaction_type, balance, time, sender, recipient, sender_phone, recipient_phone, transaction_id")
+      .select("*")
+      .eq("user_id", req.session.user.id)
       .order("date", { ascending: false });
 
     if (error) throw error;

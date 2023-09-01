@@ -10,6 +10,7 @@ router.post("/", async (req, res) => {
     const { data, error } = await supabase
   .from("transactions")
       .insert(transactions.map(transaction => ({
+        user_id: req.session.user.id,
         transaction_id: transaction.transaction_id,
         recipient: transaction.recipient,
         sender: transaction.sender,
@@ -17,7 +18,7 @@ router.post("/", async (req, res) => {
         amount: transaction.amount,
         transaction_type: transaction.type,
         date: transaction.date,
-        balance: parseFloat(transaction.balance.replace(',', '')), // Remove commas from balance and parse as float
+        balance: parseFloat(transaction.balance.replace(',', '')), 
         recipient_phone: transaction.recipient_phone,
         sender_phone: transaction.sender_phone,
       })));

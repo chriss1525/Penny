@@ -10,6 +10,7 @@ router.post('/', async (req, res) => {
     console.log(error);
     return res.status(400).json({ error: error.message });
   }
+  req.session.user = data.session;
   return res.status(200).json({ data });
 }
 );
