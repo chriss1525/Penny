@@ -43,7 +43,13 @@ class Records extends StatelessWidget {
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
-                return const CircularProgressIndicator();
+                // By default, show a loading spinner. but constrained to 200
+                return const SizedBox(
+                  height: 200,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
               },
             )
           ],
