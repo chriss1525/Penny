@@ -1,3 +1,4 @@
+import 'package:client/api/api.dart';
 import 'package:flutter/material.dart';
 
 class Records extends StatelessWidget {
@@ -23,9 +24,28 @@ class Records extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
-            const Record(),
-            const Record(),
-            const Record(),
+            FutureBuilder(
+              future: Api().transaction.getTransactions(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return Record(
+                        transactionId: snapshot.data![index].transactionId,
+                        category: 'category',
+                        amount: snapshot.data![index].amount,
+                        date: snapshot.data![index].date,
+                      );
+                    },
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+                return const CircularProgressIndicator();
+              },
+            )
           ],
         ),
       ),
@@ -34,8 +54,17 @@ class Records extends StatelessWidget {
 }
 
 class Record extends StatelessWidget {
+  final String transactionId;
+  final String category;
+  final int amount;
+  final String date;
+
   const Record({
     super.key,
+    required this.transactionId,
+    required this.category,
+    required this.amount,
+    required this.date,
   });
 
   @override
@@ -54,14 +83,14 @@ class Record extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Expense',
+                transactionId,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               Text(
-                '0.00',
+                amount.toString(),
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.error,
                   fontWeight: FontWeight.w600,
@@ -74,13 +103,13 @@ class Record extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Note',
+                category,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
               Text(
-                'Date',
+                date,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.secondary,
                 ),

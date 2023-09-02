@@ -2,14 +2,14 @@ import 'dart:convert';
 
 class Transaction {
   // mandatory fields
-  final String id;
+  final int id;
   final String userId;
   final String transactionId;
-  final String amount;
+  final int amount;
   final String transactionType;
   final String date;
   final String time;
-  final String balance;
+  final int balance;
 
   // optional fields
   final String cost; // money recieved doesn't have cost
@@ -24,7 +24,7 @@ class Transaction {
   final String senderPhone; // for money recieved via send_money
 
   Transaction({
-    this.id = '',
+    this.id = 0,
     this.userId = '',
     required this.transactionId,
     required this.amount,
@@ -45,7 +45,7 @@ class Transaction {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'userId': userId,
+      'user_id': userId,
       'transactionId': transactionId,
       'amount': amount,
       'transactionType': transactionType,
@@ -66,20 +66,20 @@ class Transaction {
   factory Transaction.fromMap(Map<String, dynamic> map) {
     return Transaction(
       id: map['id'],
-      userId: map['userId'],
-      transactionId: map['transactionId'],
+      userId: map['user_id'],
+      transactionId: map['transaction_id'],
       amount: map['amount'],
-      transactionType: map['transactionType'],
+      transactionType: map['transaction_type'],
       date: map['date'],
       time: map['time'],
       balance: map['balance'],
-      cost: map['cost'],
-      recipientName: map['recipientName'],
-      recipientPhone: map['recipientPhone'],
-      businessName: map['businessName'],
-      accountNumber: map['accountNumber'],
-      senderName: map['senderName'],
-      senderPhone: map['senderPhone'],
+      cost: map['cost'] ?? '',
+      recipientName: map['recipient_name'] ?? '',
+      recipientPhone: map['recipient_phone'] ?? '',
+      businessName: map['businessName'] ?? '',
+      accountNumber: map['accountNumber'] ?? '',
+      senderName: map['senderName'] ?? '',
+      senderPhone: map['senderPhone'] ?? '',
     );
   }
 
@@ -109,22 +109,22 @@ class Transaction {
       return Transaction(
         transactionId: match.group(1)!,
         transactionType: 'send_money',
-        amount: match.group(2)!,
+        amount: match.group(2)! as int,
         recipientName: match.group(3)!,
         recipientPhone: match.group(4)!,
         date: match.group(5)!,
         time: match.group(6)!,
-        balance: match.group(7)!,
+        balance: match.group(7)! as int,
         cost: match.group(8)!,
       );
     } else {
       return Transaction(
         transactionId: '',
         transactionType: 'another_type',
-        amount: '',
+        amount: 0,
         date: '',
         time: '',
-        balance: '',
+        balance: 0,
       );
     }
   }

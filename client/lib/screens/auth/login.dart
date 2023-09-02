@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:client/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -99,7 +101,7 @@ class _LoginFormState extends State<LoginForm> {
                         await SharedPreferences.getInstance();
 
                     await prefs.setBool('isLoggedin', true);
-                    await prefs.setString('token', response.body);
+                    await api.setCookie(response.headers['set-cookie']!);
 
                     if (!context.mounted) return;
 
