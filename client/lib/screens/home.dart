@@ -11,7 +11,6 @@ class Home extends StatelessWidget {
         title: const Text('Penny'),
       ),
       body: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Records(),
         ],

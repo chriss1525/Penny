@@ -16,18 +16,80 @@ class Records extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Records',
-              style: Theme.of(context).textTheme.titleMedium,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Records',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
             ),
-            const Divider(),
-            const SizedBox(
-              height: 8.0,
-            ),
-            const Text('This is where your records will be displayed'),
+            const Record(),
+            const Record(),
+            const Record(),
           ],
         ),
       ),
+    );
+  }
+}
+
+class Record extends StatelessWidget {
+  const Record({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Divider(),
+        ListTile(
+          visualDensity: const VisualDensity(vertical: -4.0),
+          leading: Icon(
+            Icons.attach_money,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+          // title has both category and amount of transaction
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Expense',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Text(
+                '0.00',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.error,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          // conditional note of the transaction
+          subtitle: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Note',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+              Text(
+                'Date',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+            ],
+          ),
+          // date of the transaction
+        ),
+      ],
     );
   }
 }

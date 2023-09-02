@@ -100,6 +100,10 @@ class _LoginFormState extends State<LoginForm> {
 
                     await prefs.setBool('isLoggedin', true);
                     await prefs.setString('token', response.body);
+
+                    if (!context.mounted) return;
+
+                    Navigator.pushNamed(context, '/home');
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(response.body)),

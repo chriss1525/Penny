@@ -5,12 +5,14 @@ const supabase = require("../utils/db.js");
 router.post("/", async (req, res) => {
 	try {
 		// get user_id from session
-		const { user: { id: user_id } } = req.session.userSession;
+		const {
+			user: { id: user_id },
+		} = req.session.userSession;
 
 		const transactions = req.body;
-		const { data, error } = await supabase.from("transactions").insert(
+		const { error } = await supabase.from("transactions").insert(
 			transactions.map((transaction) => ({
-				user_id, 
+				user_id,
 				transaction_id: transaction.transaction_id,
 				recipient: transaction.recipient,
 				sender: transaction.sender,

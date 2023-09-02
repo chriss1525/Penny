@@ -25,7 +25,6 @@ class AuthApi {
         'password': password,
       },
     );
-
     return res;
   }
 
@@ -37,7 +36,6 @@ class AuthApi {
         'password': password,
       },
     );
-
     return res;
   }
 }
