@@ -16,6 +16,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// Session setup
+app.set('trust proxy', 1);
 app.use(
 	session({
 		secret: process.env.SESSION_SECRET,

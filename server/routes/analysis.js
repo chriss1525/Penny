@@ -2,56 +2,47 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../utils/db.js');
 
-router.get('/:id', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const userId = req.params.id;
-    const date_1 = req.query.date_1;
-    const date_2 = req.query.date_2;
+    const user = req.session.userSession.user;
 
-    const insights = [];
+    // Check percentage send_money against balance per day per user
+    const sendMoney = await supabase
+      .from('transactions')
+      .select('DATE_TRUNC(\'day\', date) AS transaction_date')
+      .select('user_id')
+      .select('SUM(CASE WHEN transaction_type = \'send_money\' THEN amount ELSE 0 END) AS total_send_money')
+      .select('MAX(CASE WHEN transaction_type = \'send_money\' THEN amount ELSE 0 END) AS max_send_money')
+      .eq('user_id', user.id);
 
-    const date = new Date(date_1);
-    const end = new Date(date_2);
+    // Check percentage received_money against balance per day per user
+    const receivedMoney = await supabase
+      .from('transactions')
+      .select(`
+        DATE_TRUNC('day', date) AS transaction_date,
+        user_id,
+        SUM(CASE WHEN transaction_type = 'received_money' THEN amount ELSE 0 END) AS total_received_money
+      `)
+      .eq('user_id', user.id);
 
-    while (date <= end) {
-      const next = new Date(date);
-      next.setDate(date.getDate() + 1);
+    // Execute queries
+    const { data: sendMoneyData, error: sendMoneyError } = sendMoney;
+    const { data: receivedMoneyData, error: receivedMoneyError } = receivedMoney;
 
-      // Get all the entries for the current day
-      const { data, error } = await supabase
-        .from('transactions')
-        .select('transaction_type, amount, balance')
-        .eq('id', userId)
-        .gte('date', date.toISOString())
-        .lt('date', next.toISOString().split('T')[0]);
-
-      if (error) throw error;
-
-      // Calculate insights for the day
-      const spent = data
-        .filter(transaction => transaction.transaction_type === 'sent')
-        .reduce((total, transaction) => total + transaction.amount, 0);
-
-      const startbalanace = data[0].balance;
-
-      const percentage_balance_spent = (spent / startbalance) * 100;
-
-      // construct the insights for the day
-      const dailyInsights = {
-        date: date.toISOString().split('T')[0],
-        spent,
-        percentage_balance_spent
-      };
-
-      insights.push(dailyInsights);
-
-      date.setDate(date.getDate() + 1);
+    if (sendMoneyError || receivedMoneyError) {
+      console.error('Error running query:', sendMoneyError || receivedMoneyError);
+      return res.status(500).json({ error: 'An error occurred while running the query' });
     }
 
-    res.status(200).json(insights);
+    // Combine send_money and received_money data
+    const analysis = { sendMoneyData, receivedMoneyData };
+
+    return res.status(200).json({ analysis });
   } catch (error) {
-    res.status(500).json({ error });
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while running the query' });
   }
 });
 
 module.exports = router;
+
