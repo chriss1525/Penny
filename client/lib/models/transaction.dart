@@ -96,8 +96,10 @@ class Transaction {
      * check if the message is of type send_money
      * they contain the text sent to, the phone number and the date
      */
-    if (source
-        .contains(RegExp(r'^.* sent to .+ \d{10} on \d{1,2}/\d{2}/\d{2}'))) {
+    if (source.contains(
+      // check if the message is of type send_money
+      RegExp(r'^.* sent to .+ \d{10} on \d{1,2}/\d{2}/\d{2}'),
+    )) {
       // create a RegExp pattern to match the message
       RegExp pattern = RegExp(
         r'^(.*?) Confirmed\. Ksh([\d,\.]+) sent to (.+) (\d{10}) on (\d{1,2}/\d{1,2}/\d{2}) at (\d{1,2}:\d{2} [AP]M)\. New M-PESA balance is Ksh([\d,\.]+)\. Transaction cost, Ksh([\d,\.]+)\.',
@@ -117,10 +119,88 @@ class Transaction {
         balance: match.group(7)! as int,
         cost: match.group(8)!,
       );
+    } else if (source.contains(
+      // check if the message is of type recieved_money
+      RegExp(r'^.* received Ksh\d{10} from .+ on \d{1,2}/\d{2}/\d{2}'),
+    )) {
+      RegExp pattern = RegExp(
+        r'^(.*?) Confirmed\..+ received Ksh([\d,\.]+) from (.+) (\d{10}) on (\d{1,2}/\d{1,2}/\d{2}) at (\d{1,2}:\d{2} [AP]M) New M-PESA balance is Ksh([\d,\.]+)\.',
+      );
+
+      Match match = pattern.firstMatch(source)!;
+
+      return Transaction(
+        transactionId: match.group(1)!,
+        transactionType: 'recieved_money',
+        amount: match.group(2)! as int,
+        senderName: match.group(3)!,
+        senderPhone: match.group(4)!,
+        date: match.group(5)!,
+        time: match.group(6)!,
+        balance: match.group(7)! as int,
+      );
+    } else if (source.contains(
+      // check if the message is of type pochi
+      RegExp(r'^.* sent to .+ on \d{1,2}/\d{2}/\d{2}'),
+    )) {
+      RegExp pattern = RegExp(
+        r'^(.*?) Confirmed\. Ksh([\d,\.]+) sent to (.+) on (\d{1,2}/\d{1,2}/\d{2}) at (\d{1,2}:\d{2} [AP]M)\. New M-PESA balance is Ksh([\d,\.]+)\. Transaction cost, Ksh([\d,\.]+)\.',
+      );
+
+      Match match = pattern.firstMatch(source)!;
+
+      return Transaction(
+        transactionId: match.group(1)!,
+        transactionType: 'pochi',
+        amount: match.group(2)! as int,
+        senderName: match.group(3)!,
+        date: match.group(4)!,
+        time: match.group(5)!,
+        balance: match.group(6)! as int,
+      );
+    } else if (source.contains(
+      // check if the message is of type pay_bill
+      RegExp(r'^.* sent to .+ for account .+ on \d{1,2}/\d{2}/\d{2}'),
+    )) {
+      RegExp pattern = RegExp(
+        r'^(.*?) Confirmed\. Ksh([\d,\.]+) sent to (.+) for account (.+) on (\d{1,2}/\d{1,2}/\d{2}) at (\d{1,2}:\d{2} [AP]M) New M-PESA balance is Ksh([\d,\.]+)\. Transaction cost, Ksh([\d,\.]+)\.',
+      );
+
+      Match match = pattern.firstMatch(source)!;
+
+      return Transaction(
+        transactionId: match.group(1)!,
+        transactionType: 'pay_bill',
+        amount: match.group(2)! as int,
+        businessName: match.group(3)!,
+        accountNumber: match.group(4)!,
+        date: match.group(5)!,
+        time: match.group(6)!,
+        balance: match.group(7)! as int,
+      );
+    } else if (source.contains(
+      // check if the message is of type buy_goods
+      RegExp(r'^.* paid to .+ on \d{1,2}/\d{2}/\d{2}'),
+    )) {
+      RegExp pattern = RegExp(
+        r'^(.*?) Confirmed\. Ksh([\d,\.]+) paid to (.+)\. on (\d{1,2}/\d{1,2}/\d{2}) at (\d{1,2}:\d{2} [AP]M)\.New M-PESA balance is Ksh([\d,\.]+)\. Transaction cost, Ksh([\d,\.]+)\.',
+      );
+
+      Match match = pattern.firstMatch(source)!;
+
+      return Transaction(
+        transactionId: match.group(1)!,
+        transactionType: 'buy_goods',
+        amount: match.group(2)! as int,
+        businessName: match.group(3)!,
+        date: match.group(5)!,
+        time: match.group(6)!,
+        balance: match.group(7)! as int,
+      );
     } else {
       return Transaction(
         transactionId: '',
-        transactionType: 'another_type',
+        transactionType: 'has_no_type',
         amount: 0,
         date: '',
         time: '',
