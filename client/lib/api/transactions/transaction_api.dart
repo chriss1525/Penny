@@ -20,7 +20,6 @@ class TransactionApi {
 
     if (json['error'] != null) {
       debugPrint(json.toString());
-      throw Exception(json['error']);
     }
 
     if (json['data'] == null) {
