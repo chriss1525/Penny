@@ -1,8 +1,8 @@
 <template>
-  <section class="flex justify-center w-full">
+  <section id="features" class="flex justify-center w-full pt-16">
     <div class="w-full max-w-4xl flex flex-col gap-8">
       <header class="section-header">
-        <h2 class="text-xl" id="features">Features</h2>
+        <h2 class="text-xl">Features</h2>
       </header>
       <features-card
         title="Automatic Records"

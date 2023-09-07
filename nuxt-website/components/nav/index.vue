@@ -2,15 +2,15 @@
 	<div class="flex flex-col items-center shadow sticky top-0 bg-white">
 		<nav class="flex flex-row justify-between items-center w-full max-w-4xl h-16">
 			<div>
-				<nuxt-link to="/">
+				<a href="/">
 					<p class="font-semibold text-xl">Penny</p>
-				</nuxt-link>
+				</a>
 			</div>
 			<ul class="flex flex-row gap-8 items-center">
 				<li v-for="(link, index) in links" :key="index">
-					<nuxt-link :to="link.href">
+					<a :href="link.href">
 						<p class="">{{ link.text }}</p>
-					</nuxt-link>
+					</a>
 				</li>
 			</ul>
 		</nav>
