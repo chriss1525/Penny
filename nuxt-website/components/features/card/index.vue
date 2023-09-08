@@ -1,11 +1,13 @@
 <template>
   <div class="section-body w-full flex flex-col gap-4">
-    <div class="feature w-full max-w-md flex flex-row h-80">
-      <div class="feature-copy flex flex-col gap-2">
+    <div class="feature w-full flex flex-row gap-16">
+      <div class="feature-copy flex flex-col gap-2 w-full">
         <h3 class="text-2xl font-semibold">{{ title }}</h3>
         <p>{{ description }}</p>
       </div>
-      <div class="feature-media"></div>
+      <div class="feature-media w-full">
+        <img :src="photo.src" :alt="photo.alt" />
+      </div>
     </div>
   </div>
 </template>
@@ -14,6 +16,10 @@
 interface FeaturesCardProps {
   title: string;
   description: string;
+  photo: {
+    src: string;
+    alt: string;
+  };
 }
 
 defineProps<FeaturesCardProps>();
