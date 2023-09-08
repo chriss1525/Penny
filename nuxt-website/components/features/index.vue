@@ -26,7 +26,7 @@ const features = [
     title: "Sync with MPESA",
     description: "Penny syncs with your most popular payment method, MPESA, seamlessly.",
     photo: {
-      src: "/records.jpg",
+      src: "/mpesa.jpg",
       alt: "Penny automatically records your transactions",
     },
   },
