@@ -34,7 +34,7 @@ const features = [
     title: "Timely Insights",
     description: "Penny sends you timely insights about your money habits to empower you to achieve your financial goals.",
     photo: {
-      src: "/records.jpg",
+      src: "/pie.jpg",
       alt: "Penny automatically records your transactions",
     },
   }
