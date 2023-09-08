@@ -92,10 +92,6 @@ class Transaction {
 
   // fromMessage method
   factory Transaction.fromMessage(String source) {
-    /**
-     * check if the message is of type send_money
-     * they contain the text sent to, the phone number and the date
-     */
     if (source.contains(
       // check if the message is of type send_money
       RegExp(r'^.* sent to .+ \d{10} on \d{1,2}/\d{2}/\d{2}'),
