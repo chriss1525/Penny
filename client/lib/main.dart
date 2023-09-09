@@ -3,6 +3,7 @@ import 'package:client/screens/auth/reset-password.dart';
 import 'package:client/screens/home.dart';
 import 'package:client/screens/onboarding.dart';
 import 'package:client/screens/auth/register.dart';
+import 'package:client/screens/record_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,6 +57,7 @@ class PennyApp extends StatelessWidget {
           '/reset-password': (context) => const ResetPasswordScreen(),
           '/onboarding': (context) => const Onboarding(),
           '/home': (context) => const Home(),
+          '/record': (context) => const RecordScreen(),
         },
       ),
     );
