@@ -13,9 +13,9 @@
 				</div>
 				<div class="flex flex-col gap-4 max-w-xl">
 					<h3 class="text-4xl font-semibold">Connect with us</h3>
-					<div class="flex flex-col md:flex-row gap-8 md:gap-16 p-4">
-						<div class="flex flex-col items-center gap-4 border shadow-lg rounded p-8">
-							<img class="w-24 h-24 rounded-full" src="/akuya.jpg" alt="Akuya Ekorot. Software Engineer" />
+					<div class="flex flex-row gap-4 md:gap-16 p-4">
+						<div class="flex flex-col items-center gap-4 border shadow-lg rounded md:p-8 p-4">
+							<img class="w-24 rounded-full" src="/akuya.jpg" alt="Akuya Ekorot. Software Engineer" />
 							<div class="">
 								<h4 class="font-semibold text-lg">Akuya Ekorot</h4>
 								<p class="text-slate-800">Software Engineer</p>
@@ -32,9 +32,8 @@
 								</a>
 							</div>
 						</div>
-						<div class="flex flex-col items-center gap-4 border shadow-lg rounded p-8">
-							<img class="w-24 h-24 rounded-full" src="/chriss.jpeg"
-								alt="Christine Okoth. Software Engineer" />
+						<div class="flex flex-col items-center gap-4 border shadow-lg rounded md:p-8 p-4">
+							<img class="w-24 rounded-full" src="/chriss.jpeg" alt="Christine Okoth. Software Engineer" />
 							<div class="">
 								<h4 class="font-semibold text-lg">Chriss Okoth</h4>
 								<p class="text-slate-800">Software Engineer</p>
