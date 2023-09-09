@@ -1,7 +1,7 @@
 <template>
-  <section id="features" class="flex justify-center w-full">
-    <div class="w-full max-w-4xl flex flex-col gap-12 p-4">
-      <header class="section-header">
+  <section id="features" class="flex justify-center w-full pt-16 text-fuchsia-950">
+    <div class="w-full max-w-4xl flex flex-col gap-8 p-4">
+      <header>
         <h2 class="text-xl">Features</h2>
       </header>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
