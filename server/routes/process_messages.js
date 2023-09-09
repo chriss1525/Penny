@@ -22,7 +22,8 @@ router.post("/", async (req, res) => {
 				date: transaction.date,
 				balance: parseFloat(transaction.balance.replace(",", "")), // Remove commas from balance and parse as float
 				recipient_phone: transaction.recipient_phone,
-				sender_phone: transaction.sender_phone,
+        sender_phone: transaction.sender_phone,
+        cost: transaction.cost,
 			}))
 		);
 
