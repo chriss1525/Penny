@@ -1,5 +1,8 @@
 <template>
-	<section id="about" class="flex justify-center w-full pt-16 text-slate-900">
+	<section
+		id="about"
+		class="flex justify-center w-full pt-16 text-fuchsia-100 bg-fuchsia-900"
+	>
 		<div
 			class="w-full max-w-4xl flex flex-col items-center text-center gap-8"
 		>
@@ -55,7 +58,7 @@
 						>
 							<img
 								class="w-8 h-8"
-								src="/github-mark.svg"
+								src="/github-mark-white.svg"
 								alt="Penny's github repository"
 							/>
 							<p>View source code</p>

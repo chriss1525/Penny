@@ -1,11 +1,11 @@
 <template>
 	<div
-		class="flex flex-col items-center gap-4 border shadow-lg rounded md:p-8 p-4"
+		class="flex flex-col items-center gap-4 border shadow-lg rounded md:p-8 p-4 bg-fuchsia-100 text-fuchsia-900"
 	>
 		<img class="w-24 rounded-full" :src="img" :alt="`${name}: ${title}`" />
 		<div class="">
 			<h4 class="font-semibold text-lg">{{ name }}</h4>
-			<p class="text-slate-800">{{ title }}</p>
+			<p class="text-fuchsia-800">{{ title }}</p>
 		</div>
 		<div class="flex flex-row gap-4 items-center p-2 mt-2">
 			<a target="blank" :href="socials.githubUrl">
