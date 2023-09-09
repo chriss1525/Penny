@@ -5,14 +5,14 @@ class Transaction {
   final int id;
   final String userId;
   final String transactionId;
-  final int amount;
+  final double amount;
   final String transactionType;
   final String date;
   final String time;
-  final int balance;
+  final double balance;
 
   // optional fields
-  final String cost; // money recieved doesn't have cost
+  final double cost; // money recieved doesn't have cost
 
   final String recipientName; // for money sent via send_money and pochi
   final String recipientPhone; // for money sent via send_money
@@ -32,7 +32,7 @@ class Transaction {
     required this.date,
     required this.time,
     required this.balance,
-    this.cost = '',
+    this.cost = 0.0,
     this.recipientName = '',
     this.recipientPhone = '',
     this.businessName = '',
@@ -68,17 +68,17 @@ class Transaction {
       id: map['id'],
       userId: map['user_id'],
       transactionId: map['transaction_id'],
-      amount: map['amount'],
+      amount: double.parse(map['amount'].toString()),
       transactionType: map['transaction_type'],
       date: map['date'],
       time: map['time'],
-      balance: map['balance'],
-      cost: map['cost'] ?? '',
-      recipientName: map['recipient_name'] ?? '',
+      balance: double.parse(map['balance'].toString()),
+      cost: map['cost'] == null ? 0.0 : double.parse(map['cost'].toString()),
+      recipientName: map['recipient'] ?? '',
       recipientPhone: map['recipient_phone'] ?? '',
       businessName: map['businessName'] ?? '',
       accountNumber: map['accountNumber'] ?? '',
-      senderName: map['senderName'] ?? '',
+      senderName: map['sender'] ?? '',
       senderPhone: map['senderPhone'] ?? '',
     );
   }
@@ -107,13 +107,13 @@ class Transaction {
       return Transaction(
         transactionId: match.group(1)!,
         transactionType: 'send_money',
-        amount: match.group(2)! as int,
+        amount: match.group(2)! as double,
         recipientName: match.group(3)!,
         recipientPhone: match.group(4)!,
         date: match.group(5)!,
         time: match.group(6)!,
-        balance: match.group(7)! as int,
-        cost: match.group(8)!,
+        balance: match.group(7)! as double,
+        cost: match.group(8)! as double,
       );
     } else if (source.contains(
       // check if the message is of type recieved_money
@@ -128,12 +128,12 @@ class Transaction {
       return Transaction(
         transactionId: match.group(1)!,
         transactionType: 'recieved_money',
-        amount: match.group(2)! as int,
+        amount: match.group(2)! as double,
         senderName: match.group(3)!,
         senderPhone: match.group(4)!,
         date: match.group(5)!,
         time: match.group(6)!,
-        balance: match.group(7)! as int,
+        balance: match.group(7)! as double,
       );
     } else if (source.contains(
       // check if the message is of type pochi
@@ -148,11 +148,11 @@ class Transaction {
       return Transaction(
         transactionId: match.group(1)!,
         transactionType: 'pochi',
-        amount: match.group(2)! as int,
+        amount: match.group(2)! as double,
         senderName: match.group(3)!,
         date: match.group(4)!,
         time: match.group(5)!,
-        balance: match.group(6)! as int,
+        balance: match.group(6)! as double,
       );
     } else if (source.contains(
       // check if the message is of type pay_bill
@@ -167,12 +167,12 @@ class Transaction {
       return Transaction(
         transactionId: match.group(1)!,
         transactionType: 'pay_bill',
-        amount: match.group(2)! as int,
+        amount: match.group(2)! as double,
         businessName: match.group(3)!,
         accountNumber: match.group(4)!,
         date: match.group(5)!,
         time: match.group(6)!,
-        balance: match.group(7)! as int,
+        balance: match.group(7)! as double,
       );
     } else if (source.contains(
       // check if the message is of type buy_goods
@@ -187,20 +187,20 @@ class Transaction {
       return Transaction(
         transactionId: match.group(1)!,
         transactionType: 'buy_goods',
-        amount: match.group(2)! as int,
+        amount: match.group(2)! as double,
         businessName: match.group(3)!,
         date: match.group(5)!,
         time: match.group(6)!,
-        balance: match.group(7)! as int,
+        balance: match.group(7)! as double,
       );
     } else {
       return Transaction(
         transactionId: '',
         transactionType: 'has_no_type',
-        amount: 0,
+        amount: 0.0,
         date: '',
         time: '',
-        balance: 0,
+        balance: 0.0,
       );
     }
   }
