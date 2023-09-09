@@ -1,12 +1,12 @@
 <template>
-	<div class="flex flex-col items-center shadow sticky top-0 bg-white">
-		<nav class="flex flex-row justify-between items-center w-full max-w-4xl h-16">
+	<div class="flex flex-col items-center shadow sticky top-0 bg-fuchsia-100 text-fuchsia-900">
+		<nav class="flex flex-row justify-between items-center w-full max-w-4xl h-16 px-8 lg:px-0">
 			<div>
 				<a href="/">
-					<p class="font-semibold text-xl">Penny</p>
+					<p class="font-semibold md:text-xl text-lg">Penny</p>
 				</a>
 			</div>
-			<ul class="flex flex-row gap-8 items-center">
+			<ul class="flex flex-row md:gap-8 gap-4 items-center text-sm md:text-base">
 				<li v-for="(link, index) in links" :key="index">
 					<a :href="link.href">
 						<p class="">{{ link.text }}</p>

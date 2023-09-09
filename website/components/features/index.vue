@@ -1,10 +1,10 @@
 <template>
-  <section id="features" class="flex justify-center w-full pt-16">
-    <div class="w-full max-w-4xl flex flex-col gap-8">
-      <header class="section-header">
+  <section id="features" class="flex justify-center w-full pt-16 text-fuchsia-950">
+    <div class="w-full max-w-4xl flex flex-col gap-8 p-4">
+      <header>
         <h2 class="text-xl">Features</h2>
       </header>
-      <div class="flex flex-col gap-24">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <features-card v-for="(feature, index) in features" :key="index" :title="feature.title"
           :description="feature.description" :photo="feature.photo" />
       </div>
