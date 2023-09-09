@@ -1,6 +1,6 @@
 <template>
-	<div class="flex flex-col items-center shadow sticky top-0 bg-fuchsia-600 text-fuchsia-100">
-		<nav class="flex flex-row justify-between items-center w-full max-w-4xl h-16 px-8">
+	<div class="flex flex-col items-center shadow sticky top-0 bg-fuchsia-100 text-fuchsia-900">
+		<nav class="flex flex-row justify-between items-center w-full max-w-4xl h-16 px-8 lg:px-0">
 			<div>
 				<a href="/">
 					<p class="font-semibold md:text-xl text-lg">Penny</p>
