@@ -12,12 +12,12 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   bool isOnboarded = prefs.getBool('isOnboarded') ?? false;
-  bool isLoggedin = prefs.getBool('isLoggedin') ?? false;
+  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
 
   return runApp(
     PennyApp(
       isOnboarded: isOnboarded,
-      isLoggedIn: isLoggedin,
+      isLoggedIn: isLoggedIn,
     ),
   );
 }

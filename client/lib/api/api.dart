@@ -3,7 +3,7 @@ import 'package:client/api/transactions/transaction_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  final String baseUrl = 'http://3.89.155.130';
+  final String baseUrl = 'http://100.25.0.75/penny';
 
   TransactionApi get transaction => TransactionApi(this);
   AuthApi get auth => AuthApi(this);
