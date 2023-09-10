@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
 			.from("transactions")
 			.select("*")
 			.eq("user_id", user.id)
-			.order("date", { ascending: false });
+			.order("created_at", { ascending: false });
 
 		if (error) throw error;
 		res.status(200).json({ data });
