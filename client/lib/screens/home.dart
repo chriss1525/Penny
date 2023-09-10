@@ -10,6 +10,11 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Penny'),
       ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Sync your MPESA messages',
+        onPressed: () {},
+        child: const Icon(Icons.sync),
+      ),
       body: const Column(
         children: <Widget>[
           Records(),

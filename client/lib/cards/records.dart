@@ -50,13 +50,6 @@ class Records extends StatelessWidget {
                 );
               },
             ),
-            TextButton(
-              style: TextButton.styleFrom(alignment: Alignment.centerLeft),
-              onPressed: () {
-                Navigator.pushNamed(context, '/transactions');
-              },
-              child: const Text('View all'),
-            ),
           ],
         ),
       ),

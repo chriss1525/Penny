@@ -79,7 +79,7 @@ class _LoginFormState extends State<LoginForm> {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Loging in User')),
+                    const SnackBar(content: Text('Logging you in')),
                   );
 
                   _formKey.currentState!.save();
@@ -98,7 +98,7 @@ class _LoginFormState extends State<LoginForm> {
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
 
-                    await prefs.setBool('isLoggedin', true);
+                    await prefs.setBool('isLoggedIn', true);
                     await api.setCookie(response.headers['set-cookie']!);
 
                     if (!context.mounted) return;
