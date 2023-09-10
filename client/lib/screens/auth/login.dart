@@ -103,7 +103,7 @@ class _LoginFormState extends State<LoginForm> {
 
                     if (!context.mounted) return;
 
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.pushNamed(context, '/permissions');
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(response.body)),

@@ -3,6 +3,7 @@ import 'package:client/screens/auth/reset-password.dart';
 import 'package:client/screens/home.dart';
 import 'package:client/screens/onboarding.dart';
 import 'package:client/screens/auth/register.dart';
+import 'package:client/screens/permissions.dart';
 import 'package:client/screens/record_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,7 +42,7 @@ class PennyApp extends StatelessWidget {
         home: Scaffold(
           body: isOnboarded
               ? isLoggedIn
-                  ? const Home()
+                  ? const Permissions()
                   : const LoginScreen()
               : const Onboarding(),
         ),
